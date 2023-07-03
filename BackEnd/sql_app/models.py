@@ -26,7 +26,7 @@ class Propiedad(Base):
     id: Mapped[int] = mapped_column(nullable=False, primary_key=True, unique=True, autoincrement="auto")
     clave_catastral: Mapped[str] = mapped_column(String(16), nullable=False, unique=True)
     descripcion: Mapped[str] = mapped_column(String(16), nullable=False)
-    arrendatario_id: Mapped[int] = mapped_column(ForeignKey("arrendatarios_table.id"))
+    arrendatario_id: Mapped[int] = mapped_column(Integer, ForeignKey("arrendatarios_table.id"), nullable= True)
 
     arrendatario: Mapped["Arrendatario"] = relationship(back_populates="propiedades")
     propietarios: Mapped[list["Propietario"]] = relationship(secondary="propiedad_propietario_table", back_populates="propiedades_prop")

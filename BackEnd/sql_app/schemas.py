@@ -14,6 +14,7 @@ class ArrendatarioBase(BaseModel):
     nombre: str
     apellido: str
 
+
 class PropiedadCreate(PropiedadBase):
     pass
 
@@ -24,17 +25,38 @@ class PropietarioCreate(PropietarioBase):
     pass
 
 
+class PropiedadItem(PropiedadBase):
+    id: int
+    arrendatario_id: int 
+    
+    class Config:
+        orm_mode = True
+
+class PropietarioItem(PropietarioBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+class ArrendatarioItem(ArrendatarioBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
 class Propiedad(PropiedadBase):
     id: int
-    arrendatario_id: int
-    propietarios: list[PropietarioBase] = []
+    arrendatario_id: int | None
+    arrendatario: ArrendatarioItem | None
+    propietarios: list[PropietarioItem] = []
 
     class Config:
         orm_mode = True
 
 class Arrendatario(ArrendatarioBase):
     id: int
-    propiedades: list[PropiedadBase] = []
+    propiedades: list[PropiedadItem] = []
 
     class Config:
         orm_mode = True
@@ -45,3 +67,7 @@ class Propietario(PropietarioBase):
 
     class Config:
         orm_mode = True
+
+
+class ArrendatarioProp(Arrendatario):
+    id_propiedad: int

@@ -32,3 +32,12 @@ async def deleteArrendatario(db: Session, id: int):
     db_arren = db.query(models.Arrendatario).filter(models.Arrendatario.id == id).first()
     db.query(models.Arrendatario).filter(models.Arrendatario.id == id).delete()
     return db_arren
+
+async def insertArren_Propiedad(db: Session, arren: models.Arrendatario, propiedad: models.Propiedad):
+    propiedad.arrendatario = arren
+    arren.propiedades.append(propiedad)
+    db.commit()
+    db.refresh(arren)
+    db.refresh(propiedad)
+    return arren
+    
